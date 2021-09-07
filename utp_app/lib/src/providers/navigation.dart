@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:utp_app/src/models/nav/nav_menu_item.dart';
 
 import '../pages/mobile_portal.dart';
 import '../pages/directory.dart';
@@ -17,10 +18,11 @@ import '../widgets/home/home_widgets.dart';
 
 class Navigation with ChangeNotifier {
   String currentNavigation = 'Home';
+  String nameNavigation = 'Utp Móvil';
 
   get getNavigation {
     if (currentNavigation == 'mobilePortal') {
-      return MobilePortal();
+      return MobilePortal() ;
     } else if (currentNavigation == "directory") {
       return Directory();
     } else if (currentNavigation == 'parking') {
@@ -46,8 +48,9 @@ class Navigation with ChangeNotifier {
     }
   }
 
-  updateNavigation(String navigation) {
+  updateNavigation(String navigation, int index) {
     currentNavigation = navigation;
+    nameNavigation = menuTitles[index];
     notifyListeners();
   }
 

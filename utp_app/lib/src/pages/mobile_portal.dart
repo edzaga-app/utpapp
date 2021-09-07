@@ -1,3 +1,5 @@
+import 'package:utp_app/src/widgets/mobile_portal/user_card.dart';
+
 import '../widgets/mobile_portal/mobile_widgets.dart';
 
 class MobilePortal extends StatefulWidget {
@@ -8,16 +10,23 @@ class MobilePortal extends StatefulWidget {
 class _MobilePortalState extends State<MobilePortal> {
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Container(
-        height: 200,
-        width: 200,
-        alignment: Alignment(0, 0),
-        child: Text("Portal Móvil",
-          style: TextStyle(fontSize: 40, color: Colors.white),
-        ),
-        color: Colors.green,
-      ),
+    return Scaffold(
+      body: Center(
+        child: Column(
+          children: <Widget>[
+            UserCard(
+              isStudent: true,
+              title: 'Estudiante Utp',
+              subtitle: 'Presione para generar su llave móvil',
+            ),
+            UserCard(
+              isStudent: false,
+              title: 'Docente Utp',
+              subtitle: 'Presione para generar su llave móvil',
+            ),
+          ],        
+        )
+      )
     );
   }
 }
