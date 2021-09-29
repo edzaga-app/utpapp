@@ -23,14 +23,22 @@ class Header extends StatelessWidget {
       ),
       accountName: Text(
         'Universidad Tecnológica de Pereira',
-        style: TextStyle(fontSize: 15),
+        style: TextStyle(
+          fontSize: 15,
+          color: Colors.white
+        ),
       ),
       currentAccountPicture: CircleAvatar(
-        backgroundImage: AssetImage('assets/images/escudoUtpFondo9.png'),
+        backgroundImage: AssetImage('assets/images/logo-utp.jpg'),
         radius: 90.0,
         backgroundColor: Colors.white,
       ),
-      accountEmail: Text('Un Mundo de Inagotables Experiencias'),
+      accountEmail: Text(
+        'Un Mundo de Inagotables Experiencias',
+        style: TextStyle(
+          color: Colors.white
+        )
+      ),
       otherAccountsPictures: <Widget>[
         IconButton(
           icon: storage.darkMode ? 

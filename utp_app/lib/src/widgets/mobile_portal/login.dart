@@ -1,4 +1,5 @@
 import 'package:flutter/services.dart';
+import 'package:utp_app/src/pages/student_portal/student_home.dart';
 import 'package:utp_app/src/services/mobile_portal.service.dart';
 import 'package:utp_app/src/widgets/mobile_portal/mobile_widgets.dart';
 
@@ -30,7 +31,7 @@ class _LoginState extends State<Login> {
     passwordVisibility = false;
   }
 
-  void _login(BuildContext context) async {
+  void _login(BuildContext context, Storage storage) async {
     final bool isValid = formKey.currentState.validate();
     if(isValid) {
       _loadProgress();
@@ -43,9 +44,14 @@ class _LoginState extends State<Login> {
           "El Usuario y/o la contraseña son incorrectas. Vuelve a intentarlo"
         );
         _loadProgress();
-
+        return;
       }
-      print(token);
+      storage.setToken(token);
+      Navigator.push(
+        context, 
+        MaterialPageRoute(builder: (context) => StudentHome())
+      );
+      
     }
 
   }
@@ -59,6 +65,7 @@ class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
     final colorTheme = Theme.of(context);
+    final storage = Provider.of<Storage>(context);
     final mode = widget.userType ? Text('hola Estudiante') : Text('hola Profesor');
     
     return Scaffold(
@@ -70,7 +77,7 @@ class _LoginState extends State<Login> {
       ? Center(
         child: Container(
           child: CircularProgressIndicator(
-            color: colorTheme.accentColor,
+            color: colorTheme.colorScheme.secondary,
           )
         )
       )
@@ -153,11 +160,11 @@ class _LoginState extends State<Login> {
                                 decoration: InputDecoration(
                                   labelText: 'Ingrese el usuario',
                                   hintText: 'Usuario',
-                                  enabledBorder: _defineOutlineInputBorder(colorTheme.primaryColor),
-                                  focusedBorder: _defineOutlineInputBorder(colorTheme.primaryColor),
+                                  enabledBorder: _defineOutlineInputBorder(colorTheme.colorScheme.primary),
+                                  focusedBorder: _defineOutlineInputBorder(colorTheme.colorScheme.primary),
                                   errorBorder: _defineOutlineInputBorder(Colors.red),
                                   focusedErrorBorder: _defineOutlineInputBorder(Colors.red),
-                                  fillColor: colorTheme.primaryColor,
+                                  fillColor: colorTheme.colorScheme.primary,
                                   prefixIcon: Icon(Icons.perm_identity_rounded),
                                   suffixIcon: InkWell(
                                     child: Icon(
@@ -182,11 +189,11 @@ class _LoginState extends State<Login> {
                                   decoration: InputDecoration(
                                     labelText: 'Ingrese su clave',
                                     hintText: 'Clave',
-                                    enabledBorder: _defineOutlineInputBorder(colorTheme.primaryColor),
-                                    focusedBorder: _defineOutlineInputBorder(colorTheme.primaryColor),
+                                    enabledBorder: _defineOutlineInputBorder(colorTheme.colorScheme.primary),
+                                    focusedBorder: _defineOutlineInputBorder(colorTheme.colorScheme.primary),
                                     errorBorder: _defineOutlineInputBorder(Colors.red),
                                     focusedErrorBorder: _defineOutlineInputBorder(Colors.red),
-                                    fillColor: colorTheme.primaryColor,
+                                    fillColor: colorTheme.colorScheme.primary,
                                     prefixIcon: Icon(Icons.lock_outline),
                                     suffixIcon: InkWell(
                                       onTap: () {
@@ -230,10 +237,7 @@ class _LoginState extends State<Login> {
                                       minimumSize: Size(200, 50)
                                     ),
                                     onPressed: () async {
-                                      _login(context);
-                                      
-                                      
-
+                                      _login(context, storage);
                                     }, 
                                   ),
                                 ),
