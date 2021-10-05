@@ -19,8 +19,6 @@ class _StudentHomeState extends State<StudentHome> {
     'photo': null,
     'type': ''
   };
-  
-  
 
   @override
   void initState() {
@@ -82,7 +80,6 @@ class _StudentHomeState extends State<StudentHome> {
       }
     );
 
-
     return MultiProvider(
       providers: [
         ChangeNotifierProvider<NavigationStudentProvider>(create: (_) => NavigationStudentProvider(storage: storage)),
@@ -104,7 +101,14 @@ class _StudentHomeState extends State<StudentHome> {
               ),
             ],
           ),
-          body: Center(child: futureBuilder),
+          body: Consumer<NavigationStudentProvider>(
+            builder: (context, navigationProvider, _) { 
+              if(navigationProvider.currentNavigation != 'studentHome'){
+                return navigationProvider.getNavigation;
+              }
+              return Center(child: futureBuilder);
+            }
+          ),
           drawer: Drawer(
             child: Column(
               children: <Widget>[

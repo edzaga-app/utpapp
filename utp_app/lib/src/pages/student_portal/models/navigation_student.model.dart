@@ -10,18 +10,21 @@ class NavigationStudentModel {
         this.name,
         this.navigation,
         this.icon,
+        this.widget
     });
 
     int id;
     String name;
     String navigation;
     String icon;
+    String widget;
 
     factory NavigationStudentModel.fromJson(Map<String, dynamic> json) => NavigationStudentModel(
         id: json["id"],
         name: json["name"],
         navigation: json["navigation"],
         icon: json["icon"],
+        widget: json["widget"],
     );
 
     Map<String, dynamic> toJson() => {
@@ -29,5 +32,6 @@ class NavigationStudentModel {
         "name": name,
         "navigation": navigation,
         "icon": icon,
+        "widget": widget
     };
 }

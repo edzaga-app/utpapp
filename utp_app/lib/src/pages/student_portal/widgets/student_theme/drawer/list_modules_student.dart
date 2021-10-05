@@ -1,5 +1,3 @@
-import 'package:utp_app/src/pages/student_portal/models/navigation_student.model.dart';
-
 import '../../student_theme/student_theme_widgets.dart';
 
 class ListModulesStudent extends StatelessWidget {
@@ -12,9 +10,9 @@ class ListModulesStudent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final storage = Provider.of<Storage>(context);
+    final navigationStudent = Provider.of<NavigationStudentProvider>(context);
     List<String> names = [...menus].map((item) => item.name).toList();
     final icons = [...menus].map((item) => item.icon).toList();
-
 
     return Container(
       decoration: BoxDecoration(
@@ -37,7 +35,7 @@ class ListModulesStudent extends StatelessWidget {
               trailing: Icon(Icons.arrow_right),
               onTap: () {
                 Navigator.of(context).pop();
-                // navigation.updateNavigation(rutes[index], index);
+                navigationStudent.updateNavigation(menus[index], index);
               },
             ),
           );
