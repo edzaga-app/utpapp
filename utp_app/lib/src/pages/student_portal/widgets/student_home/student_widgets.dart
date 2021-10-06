@@ -6,3 +6,5 @@ export 'package:utp_app/src/pages/student_portal/widgets/student_theme/drawer/he
 export 'package:utp_app/src/widgets/mobile_portal/mobile_widgets.dart';
 export 'package:utp_app/src/pages/student_portal/models/navigation_student.model.dart';
 export 'package:utp_app/src/pages/student_portal/providers/navigation_student.provider.dart';
+export 'package:utp_app/src/pages/student_portal/widgets/student_theme/drawer/list_modules_student.dart';
+export 'package:utp_app/src/pages/student_portal/widgets/student_theme/app_bar_student.dart';

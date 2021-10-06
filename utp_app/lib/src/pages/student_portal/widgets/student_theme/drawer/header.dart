@@ -39,7 +39,7 @@ class _HeaderState extends State<Header> {
         ),
       ),
       currentAccountPicture: CircleAvatar(
-        backgroundImage: widget.student['photo'].length > 0 ? MemoryImage(widget.student['photo']) : AssetImage('assets/images/logo-utp.jpg'),
+        backgroundImage: widget.student['photo'] != null ? MemoryImage(widget.student['photo']) : AssetImage('assets/images/logo-utp.jpg'),
         radius: 90.0,
         backgroundColor: Colors.white,
       ),

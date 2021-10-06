@@ -1,5 +1,3 @@
-import 'package:utp_app/src/pages/student_portal/widgets/student_theme/drawer/list_modules_student.dart';
-
 import '../student_portal/widgets/student_home/student_widgets.dart';
 
 class StudentHome extends StatefulWidget {
@@ -11,6 +9,7 @@ class _StudentHomeState extends State<StudentHome> {
   Future<UserInformationModel> futureInformation;
   Future<List<NavigationStudentModel>> futureMenus;
   List<NavigationStudentModel> menus;
+  String nameNavigation;
 
   Map<String, dynamic> stundent = {
     'name': '',
@@ -42,7 +41,6 @@ class _StudentHomeState extends State<StudentHome> {
   @override
   Widget build(BuildContext context) {
     final storage = Provider.of<Storage>(context);
-    
     final futureBuilder = new FutureBuilder<UserInformationModel>(
       future: futureInformation,
       builder: (BuildContext context, AsyncSnapshot<UserInformationModel> snapshot) {
@@ -87,20 +85,7 @@ class _StudentHomeState extends State<StudentHome> {
       child: WillPopScope(
         onWillPop: () async => false,
         child: Scaffold(
-          appBar: AppBar(
-            title: Text('Portal Estudiantil'),
-            actions: <Widget>[
-              IconButton(
-                onPressed: () {
-                  storage.deleteToken();
-                  Navigator.of(context).pop();
-                }, 
-                icon: Icon(
-                  Icons.logout_rounded
-                )
-              ),
-            ],
-          ),
+          appBar: AppBarStudent(),
           body: Consumer<NavigationStudentProvider>(
             builder: (context, navigationProvider, _) { 
               if(navigationProvider.currentNavigation != 'studentHome'){
