@@ -34,7 +34,7 @@ class _PartialNotesState extends State<PartialNotes> {
     Future.forEach(courses, (item) => {
       _steps.add(Step(
         title: Text(
-          "${item.course} : ${item.grade}",
+          "${item.course} : ${item.grade.toStringAsFixed(1)}",
           style: TextStyle(
             fontFamily: 'HelveticaNeue',
             color: Colors.black54,
@@ -43,7 +43,7 @@ class _PartialNotesState extends State<PartialNotes> {
         ),
         content: Container(
           alignment: Alignment.centerLeft,
-          child: DetailCourses(index: _index)
+          child: DetailCourses(detailGrades: item.detailGrades)
         ),
         isActive: _index >= 0,
       ))
