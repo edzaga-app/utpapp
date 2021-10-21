@@ -1,6 +1,4 @@
-import 'package:provider/provider.dart';
-import 'package:utp_app/src/helpers/storage.dart';
-import 'package:utp_app/src/helpers/theme_utp.dart';
+import 'package:utp_app/src/pages/student_portal/widgets/partial_notes/detail_courses.dart';
 
 import '../student_portal/widgets/partial_notes/partial_widgets.dart';
 
@@ -10,13 +8,82 @@ class PartialNotes extends StatefulWidget {
 }
 
 class _PartialNotesState extends State<PartialNotes> {
-
+  List<CourseModel> courses;
+  List<Step> steps;
+  Future<List<Step>> futureSteps;
   int _index = 0;
+  int _sizeCourses = 0;
+  
+  @override
+  void initState() {
+    super.initState();
+    futureSteps = getSteps();
+  }
+
+  Future<List<CourseModel>> getCourses() async {
+    final courseService = new CourseService();
+    final token = Provider.of<Storage>(context, listen: false).token;
+    final courses = await courseService.getCourses(token);
+    return courses;
+  }
+
+  Future<List<Step>> getSteps() async {
+    List<Step> _steps = [];
+    final courses = await getCourses();
+    _sizeCourses = courses.length;
+    Future.forEach(courses, (item) => {
+      _steps.add(Step(
+        title: Text(
+          "${item.course} : ${item.grade}",
+          style: TextStyle(
+            fontFamily: 'HelveticaNeue',
+            color: Colors.black54,
+            fontWeight: FontWeight.bold
+          ),
+        ),
+        content: Container(
+          alignment: Alignment.centerLeft,
+          child: DetailCourses(index: _index)
+        ),
+        isActive: _index >= 0,
+      ))
+    });
+    return _steps;
+  }
+
+  
+
 
   @override
   Widget build(BuildContext context) {
     final colorTheme = Theme.of(context);
     final storage = Provider.of<Storage>(context);
+
+    final futureBuilderSteps = new FutureBuilder<List<Step>>(
+      future: futureSteps,
+      builder: (BuildContext context, AsyncSnapshot<List<Step>> snapshot) {
+        if (snapshot.hasData) {
+          steps = snapshot.data;
+          return Stepper(
+            physics: ClampingScrollPhysics(),
+            currentStep: _index,
+            onStepTapped: (step) => taped(step),
+            onStepContinue: continued,
+            onStepCancel: cancel,
+            steps: steps
+          );
+          // return ListCourses(steps: steps);
+        } else {
+          // mensaje de error cambiar
+          if(snapshot.hasError) {
+            return Text('${snapshot.error}');
+          }
+          return CircularProgressIndicator();
+
+        } 
+      }
+    );
+
     return Stack(
       children: <Widget>[
         Container(
@@ -83,43 +150,9 @@ class _PartialNotesState extends State<PartialNotes> {
               ),
             ),
             child: Padding(
-              padding: EdgeInsets.all(20),
-              child: SingleChildScrollView(
-                child: Stepper(
-                  
-                  currentStep: _index,
-                  onStepCancel: () {
-                    if (_index > 0) {
-                      setState(() {
-                        _index -= 1;
-                      });
-                    }
-                  },
-                  onStepContinue: () {
-                    if (_index <= 0) {
-                      setState(() {
-                        _index += 1;
-                      });
-                    }
-                  },
-                  onStepTapped: (int index) {
-                    setState(() {
-                      _index = index;
-                    });
-                  },
-                  steps: <Step>[
-                    Step(
-                      title: const Text('Auditoría de Sistemas: 4.3'),
-                      content: Container(
-                          alignment: Alignment.centerLeft,
-                          child: const Text('Content for Step 1')),
-                    ),
-                    const Step(
-                      title: Text('Step 2 title'),
-                      content: Text('Content for Step 2'),
-                    ),
-                  ],
-                ),
+              padding: EdgeInsets.all(3),
+              child: Center(
+                child: futureBuilderSteps
               ),
             ),
           ),
@@ -128,5 +161,22 @@ class _PartialNotesState extends State<PartialNotes> {
 
     );
   }
+
+  cancel() {
+    if (_index > 0) {
+      setState(() => _index -= 1);
+    }
+  }
+
+  continued() {
+    if(_index < _sizeCourses -1) {
+      setState(() => _index += 1);
+    }
+  }
+
+  taped(int step) {
+    setState(() => _index = step);
+  }
+
 }
 

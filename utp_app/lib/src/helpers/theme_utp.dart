@@ -31,7 +31,8 @@ final lightTheme = ThemeData(
   backgroundColor: Color(0xFFE5E5E5),
   fontFamily: 'HelveticaNeue',
   primaryIconTheme: IconThemeData(color: Colors.white),
-  dividerColor: Colors.white54
+  dividerColor: Colors.white54,
+  
 );
 
 
