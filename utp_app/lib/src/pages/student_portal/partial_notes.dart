@@ -43,16 +43,17 @@ class _PartialNotesState extends State<PartialNotes> {
         ),
         content: Container(
           alignment: Alignment.centerLeft,
-          child: DetailCourses(detailGrades: item.detailGrades)
+          child: DetailCourses(
+            detailGrades: item.detailGrades,
+            groupNumber: item.groupNumber,
+            courseCode: item.courseCode
+          )
         ),
         isActive: _index >= 0,
       ))
     });
     return _steps;
   }
-
-  
-
 
   @override
   Widget build(BuildContext context) {
@@ -67,12 +68,38 @@ class _PartialNotesState extends State<PartialNotes> {
           return Stepper(
             physics: ClampingScrollPhysics(),
             currentStep: _index,
+            controlsBuilder: (BuildContext context, ControlsDetails details) {
+              return Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  if (_index > 0)
+                    IconButton(
+                      color: colorTheme.primaryColor,
+                      icon: Icon(Icons.arrow_left_outlined),
+                      onPressed: () {
+                        setState(() {
+                          _index = _index - 1;
+                        });
+                      },
+                    ),
+                  if (_index < _sizeCourses - 1)
+                    IconButton(
+                      color: colorTheme.primaryColor,
+                      icon: Icon(Icons.arrow_right_outlined),
+                      onPressed: () {
+                        setState(() {
+                          _index = _index + 1;
+                        });
+                      },
+                    ),
+                ],
+              );
+            },
             onStepTapped: (step) => taped(step),
-            onStepContinue: continued,
-            onStepCancel: cancel,
+            // onStepContinue: continued,
+            // onStepCancel: cancel,
             steps: steps
           );
-          // return ListCourses(steps: steps);
         } else {
           // mensaje de error cambiar
           if(snapshot.hasError) {

@@ -66,7 +66,7 @@ class _LoginState extends State<Login> {
   Widget build(BuildContext context) {
     final colorTheme = Theme.of(context);
     final storage = Provider.of<Storage>(context);
-    final mode = widget.userType ? Text('hola Estudiante') : Text('hola Profesor');
+    // final mode = widget.userType ? Text('hola Estudiante') : Text('hola Profesor');
     
     return Scaffold(
       appBar: AppBar(
