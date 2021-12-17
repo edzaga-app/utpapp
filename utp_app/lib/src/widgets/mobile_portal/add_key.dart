@@ -1,7 +1,4 @@
 import 'package:flutter/services.dart';
-import 'package:provider/provider.dart';
-import 'package:utp_app/src/helpers/storage.dart';
-import 'package:utp_app/src/helpers/theme_utp.dart';
 import 'package:utp_app/src/services/mobile_portal.service.dart';
 import 'package:utp_app/src/widgets/mobile_portal/mobile_widgets.dart';
 
